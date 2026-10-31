@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Passeio Premiado">
-<title>Meu Passeio Premiado</title>
+<meta name="apple-mobile-web-app-title" content="Passeio Pets">
+<title>Passeio Pets</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#fff3cf;--card:#fff;--ink:#5b3a29;--soft:#a98466;--sky:#aee3ff;--grass:#a8e6a1;--pink:#ffc1d9;--sun:#ffd24d;--orange:#ff9340;--green:#3fbf6b;--line:#ffe0a1;
@@ -55,6 +55,8 @@ nav.tabs button.act{background:var(--sun)}
 .coins{font-size:24px;word-break:break-all;line-height:1.2;margin-top:6px;min-height:30px}
 .tot{background:var(--sun);border-radius:28px;text-align:center;padding:14px;margin-bottom:16px}
 .tot .v{font-size:36px;font-weight:700}
+.week{background:var(--grass);border-radius:28px;text-align:center;padding:14px;margin-bottom:16px}
+.week .v{font-size:32px;font-weight:700}
 h3{margin:6px 4px 8px;font-size:21px}
 .hist{width:100%;display:flex;align-items:center;gap:10px;background:var(--card);border:3px solid var(--line);border-radius:22px;padding:12px 14px;margin-bottom:8px;text-align:left}
 .hist b{font-size:19px;flex:1}
@@ -87,7 +89,7 @@ h3{margin:6px 4px 8px;font-size:21px}
 </head>
 <body>
 <div id="app">
-<header><span class="cloud" style="left:12px">☁️</span><h1>🐾 Meu Passeio Premiado 🐾</h1><button class="gear" id="gear" aria-label="Nomes dos cachorrinhos">⚙️</button></header>
+<header><span class="cloud" style="left:12px">☁️</span><h1>🐾 Passeio Pets 🐾</h1><button class="gear" id="gear" aria-label="Nomes dos cachorrinhos">⚙️</button></header>
 <main id="main"></main>
 <nav class="tabs"><button id="t1"><span>📅</span>Calendário</button><button id="t2"><span>🐷</span>Carteira</button></nav>
 </div>
@@ -105,6 +107,11 @@ function rs(n){return "R$ "+n.toFixed(2).replace(".",",")}
 function cnt(d){return d?(d.a===1?1:0)+(d.b===1?1:0):0}
 function monthStats(y,m){var w=0,pre=y+"-"+pad(m+1)+"-";for(var k in S.days){if(k.indexOf(pre)===0)w+=cnt(S.days[k])}return{w:w,v:w*PREMIO}}
 function totalAll(){var w=0;for(var k in S.days)w+=cnt(S.days[k]);return{w:w,v:w*PREMIO}}
+ function weekStats(){
+ var w=0,s=new Date(now.getFullYear(),now.getMonth(),now.getDate()-now.getDay());
+ for(var i=0;i<7;i++){var d=new Date(s.getFullYear(),s.getMonth(),s.getDate()+i);w+=cnt(S.days[key(d.getFullYear(),d.getMonth(),d.getDate())])}
+ return{w:w,v:w*PREMIO}
+}
 function render(){
  $("#t1").className=view==="cal"?"act":"";$("#t2").className=view==="wallet"?"act":"";
  $("#main").innerHTML=view==="cal"?cal():wallet();
@@ -129,11 +136,11 @@ function cal(){
  return h;
 }
 function wallet(){
- var ms=monthStats(Y,M),t=totalAll(),coins="";
+ var ms=monthStats(Y,M),t=totalAll(),wk=weekStats(),coins="";
  for(var i=0;i<Math.min(ms.w*1,30);i++)coins+="🪙";
- var h='<div class="pig"><div class="big">🐷</div><div class="l">'+MES[M]+" "+Y+'</div><div class="v">'+rs(ms.v)+'</div><div class="l">'+ms.w+(ms.w===1?" passeio":" passeios")+' 🐾</div><div class="coins">'+(coins||"Vamos passear?")+'</div></div>';
- h+='<div class="tot"><div>⭐ Total guardado ⭐</div><div class="v">'+rs(t.v)+'</div><div>'+t.w+(t.w===1?" passeio":" passeios")+' no total</div></div><h3>📖 Meses anteriores</h3>';
- var set={};set[now.getFullYear()+"-"+pad(now.getMonth()+1)]=1;
+ var h='<div class="pig"><div class="big">🐷</div><div class="l">'+MES[M]+" "+Y+'</div><div class="v">'+rs(ms.v)+'</div><div class="l">'+ms.w+(ms.w===1?" passeio":" passeios")+' 🐾</div><div class="coins">'+coins+'</div></div>';
+ h+='<div class="tot"><div>⭐ Total recebido ⭐</div><div class="v">'+rs(t.v)+'</div><div>'+t.w+(t.w===1?" passeio":" passeios")+' no total</div></div>';
+ h+='<div class="week"><div>📆 Esta semana</div><div class="v">'+rs(wk.v)+'</div><div>'+wk.w+(wk.w===1?" passeio":" passeios")+'</div></div><h3>📖 Meses anteriores</h3>'; var set={};set[now.getFullYear()+"-"+pad(now.getMonth()+1)]=1;
  for(var k in S.days){if(cnt(S.days[k])>0||S.days[k].a===0||S.days[k].b===0)set[k.slice(0,7)]=1}
  Object.keys(set).sort().reverse().forEach(function(ym){
   var y=+ym.slice(0,4),m=+ym.slice(5)-1,s=monthStats(y,m);
