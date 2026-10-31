@@ -10,8 +10,6 @@
 <style>
 :root{--bg:#fff3cf;--card:#fff;--ink:#5b3a29;--soft:#a98466;--sky:#aee3ff;--grass:#a8e6a1;--pink:#ffc1d9;--sun:#ffd24d;--orange:#ff9340;--green:#3fbf6b;--line:#ffe0a1;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a2140;--card:#3a2f58;--ink:#fff1dc;--soft:#c9b8e8;--sky:#4a6fb0;--grass:#3e8a58;--pink:#9b4f78;--line:#54457a}}
-:root[data-theme="dark"]{--bg:#2a2140;--card:#3a2f58;--ink:#fff1dc;--soft:#c9b8e8;--sky:#4a6fb0;--grass:#3e8a58;--pink:#9b4f78;--line:#54457a}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink);font-family:"Fredoka","Arial Rounded MT Bold","Trebuchet MS",sans-serif;font-weight:500;overflow:hidden}
@@ -28,13 +26,12 @@ main{flex:1;overflow-y:auto;padding:14px 14px 100px}
 .nav button:active{transform:translateY(3px);box-shadow:0 1px 0 #e0a800}
 .nav h2{margin:0;font-size:26px;text-align:center;line-height:1.1}
 .nav small{display:block;font-size:15px;color:var(--soft);font-weight:500}
-.wk,.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.wk,.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
 .wk div{text-align:center;font-weight:700;color:var(--soft);font-size:14px;padding-bottom:4px}
 .day{aspect-ratio:1/1.12;border-radius:16px;background:var(--card);border:3px solid var(--line);padding:2px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-size:15px;font-weight:700;position:relative;line-height:1.1}
-.day:nth-child(7n+2){background:#fff7e0}
 .day .n{margin-top:2px}
-.day .st{font-size:19px;display:flex;flex-wrap:wrap;justify-content:center;margin-top:1px}
-.day.on{border-color:var(--green);background:#e6fbe9}
+.day .st{font-size:15px;display:flex;justify-content:center;margin-top:1px;white-space:nowrap}
+.day{min-width:0}.day.on{border-color:var(--green);background:#e6fbe9}
 .day.off{border-color:#c9c2e6;background:#f1eefc}
 .day.today{border-color:var(--orange);box-shadow:0 0 0 3px #ff934066}
 .day.fut{opacity:.4;pointer-events:none}
