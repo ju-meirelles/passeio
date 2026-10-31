@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Passeio Premiado">
+<title>Meu Passeio Premiado</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff3cf;--card:#fff;--ink:#5b3a29;--soft:#a98466;--sky:#aee3ff;--grass:#a8e6a1;--pink:#ffc1d9;--sun:#ffd24d;--orange:#ff9340;--green:#3fbf6b;--line:#ffe0a1;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a2140;--card:#3a2f58;--ink:#fff1dc;--soft:#c9b8e8;--sky:#4a6fb0;--grass:#3e8a58;--pink:#9b4f78;--line:#54457a}}
+:root[data-theme="dark"]{--bg:#2a2140;--card:#3a2f58;--ink:#fff1dc;--soft:#c9b8e8;--sky:#4a6fb0;--grass:#3e8a58;--pink:#9b4f78;--line:#54457a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Fredoka","Arial Rounded MT Bold","Trebuchet MS",sans-serif;font-weight:500;overflow:hidden}
+button{font:inherit;color:inherit;border:0;cursor:pointer}
+#app{max-width:480px;height:100%;margin:0 auto;display:flex;flex-direction:column;position:relative}
+header{background:var(--sky);border-radius:0 0 32px 32px;padding:10px 16px 14px;text-align:center;position:relative;overflow:hidden;flex:none}
+header:after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:var(--grass)}
+header h1{margin:0;font-size:24px;font-weight:700;letter-spacing:.2px}
+header .cloud{position:absolute;top:8px;font-size:26px;opacity:.9}
+.gear{position:absolute;right:12px;top:10px;background:#ffffff99;border-radius:50%;width:40px;height:40px;font-size:20px}
+main{flex:1;overflow-y:auto;padding:14px 14px 100px}
+.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.nav button{width:56px;height:56px;border-radius:50%;background:var(--sun);font-size:26px;font-weight:700;box-shadow:0 4px 0 #e0a800}
+.nav button:active{transform:translateY(3px);box-shadow:0 1px 0 #e0a800}
+.nav h2{margin:0;font-size:26px;text-align:center;line-height:1.1}
+.nav small{display:block;font-size:15px;color:var(--soft);font-weight:500}
+.wk,.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.wk div{text-align:center;font-weight:700;color:var(--soft);font-size:14px;padding-bottom:4px}
+.day{aspect-ratio:1/1.12;border-radius:16px;background:var(--card);border:3px solid var(--line);padding:2px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-size:15px;font-weight:700;position:relative;line-height:1.1}
+.day:nth-child(7n+2){background:#fff7e0}
+.day .n{margin-top:2px}
+.day .st{font-size:19px;display:flex;flex-wrap:wrap;justify-content:center;margin-top:1px}
+.day.on{border-color:var(--green);background:#e6fbe9}
+.day.off{border-color:#c9c2e6;background:#f1eefc}
+.day.today{border-color:var(--orange);box-shadow:0 0 0 3px #ff934066}
+.day.fut{opacity:.4;pointer-events:none}
+.day.pop .st span{animation:stamp .5s cubic-bezier(.2,1.6,.4,1)}
+.empty{height:1px}
+@keyframes stamp{0%{transform:scale(3) rotate(-30deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+.chip{margin:14px auto 0;background:var(--pink);border-radius:24px;padding:10px 16px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:19px;font-weight:700}
+.hint{text-align:center;color:var(--soft);margin:10px 0 0;font-size:16px}
+nav.tabs{position:absolute;left:12px;right:12px;bottom:calc(8px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;background:var(--card);border:3px solid var(--line);border-radius:30px;padding:6px;box-shadow:0 6px 18px #5b3a2933}
+nav.tabs button{flex:1;border-radius:24px;padding:10px 4px;background:transparent;font-size:17px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:0}
+nav.tabs button span{font-size:26px}
+nav.tabs button.act{background:var(--sun)}
+.pig{background:var(--pink);border-radius:32px;text-align:center;padding:18px 12px;margin-bottom:12px;position:relative}
+.pig .big{font-size:76px;line-height:1;display:inline-block;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(4deg)}}
+.pig .v{font-size:44px;font-weight:700;line-height:1.1}
+.pig .l{font-size:18px}
+.coins{font-size:24px;word-break:break-all;line-height:1.2;margin-top:6px;min-height:30px}
+.tot{background:var(--sun);border-radius:28px;text-align:center;padding:14px;margin-bottom:16px}
+.tot .v{font-size:36px;font-weight:700}
+h3{margin:6px 4px 8px;font-size:21px}
+.hist{width:100%;display:flex;align-items:center;gap:10px;background:var(--card);border:3px solid var(--line);border-radius:22px;padding:12px 14px;margin-bottom:8px;text-align:left}
+.hist b{font-size:19px;flex:1}
+.hist small{display:block;color:var(--soft);font-size:15px;font-weight:500}
+.hist .m{font-size:20px;font-weight:700;color:var(--green)}
+.shade{position:absolute;inset:0;background:#3a1f1088;display:flex;align-items:flex-end;z-index:20;animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.sheet{width:100%;background:var(--bg);border-radius:32px 32px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));animation:up .3s cubic-bezier(.2,1.2,.4,1);max-height:92%;overflow:auto}
+@keyframes up{from{transform:translateY(100%)}}
+.sheet h2{text-align:center;margin:0 0 12px;font-size:25px}
+.dog{background:var(--card);border:3px solid var(--line);border-radius:24px;padding:12px;margin-bottom:10px}
+.dog h4{margin:0 0 8px;font-size:21px;display:flex;align-items:center;gap:8px}
+.dog .row{display:flex;gap:8px}
+.dog .row button{flex:1;border-radius:20px;padding:14px 4px;font-size:19px;font-weight:700;background:#f3ece0;box-shadow:0 4px 0 #dccdb3}
+.dog .row button:active{transform:translateY(3px);box-shadow:0 1px 0 #dccdb3}
+.dog .row .yes.sel{background:var(--green);color:#fff;box-shadow:0 4px 0 #2a8f4f}
+.dog .row .no.sel{background:#b7a8ee;color:#fff;box-shadow:0 4px 0 #8c7bd0}
+.ok{width:100%;background:var(--orange);color:#fff;border-radius:24px;padding:16px;font-size:23px;font-weight:700;box-shadow:0 5px 0 #d06f1e}
+.ok:active{transform:translateY(4px);box-shadow:0 1px 0 #d06f1e}
+.earn{text-align:center;font-size:21px;font-weight:700;margin:2px 0 12px;color:var(--green)}
+.nm{width:100%;font:inherit;font-size:20px;padding:12px 14px;border-radius:18px;border:3px solid var(--line);background:var(--card);color:var(--ink);margin-bottom:10px}
+.fx{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+.fx i{position:absolute;top:-30px;font-style:normal;animation:fall 1.7s ease-in forwards}
+@keyframes fall{to{transform:translate(var(--dx),110vh) rotate(var(--r));opacity:.9}}
+.cheer{position:fixed;left:50%;top:40%;font-size:110px;z-index:51;pointer-events:none;animation:cheer 1.3s ease-out forwards;text-align:center}
+.cheer b{display:block;font-size:34px;color:var(--green);text-shadow:0 2px 0 #fff}
+@keyframes cheer{0%{transform:translate(-50%,0) scale(.2);opacity:0}25%{transform:translate(-50%,-20px) scale(1.2);opacity:1}100%{transform:translate(-50%,-120px) scale(1);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div id="app">
+<header><span class="cloud" style="left:12px">☁️</span><h1>🐾 Meu Passeio Premiado 🐾</h1><button class="gear" id="gear" aria-label="Nomes dos cachorrinhos">⚙️</button></header>
+<main id="main"></main>
+<nav class="tabs"><button id="t1"><span>📅</span>Calendário</button><button id="t2"><span>🐷</span>Carteira</button></nav>
+</div>
+<script>
+var MES=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+var PREMIO=10,KEY="mpp.v1";
+var S={days:{},names:{a:"Cachorrinho 1",b:"Cachorrinho 2"}};
+try{var raw=localStorage.getItem(KEY);if(raw){var p=JSON.parse(raw);if(p&&p.days)S=p}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+var now=new Date(),view="cal",Y=now.getFullYear(),M=now.getMonth(),popKey=null;
+var $=function(s){return document.querySelector(s)};
+function pad(n){return n<10?"0"+n:""+n}
+function key(y,m,d){return y+"-"+pad(m+1)+"-"+pad(d)}
+function rs(n){return "R$ "+n.toFixed(2).replace(".",",")}
+function cnt(d){return d?(d.a===1?1:0)+(d.b===1?1:0):0}
+function monthStats(y,m){var w=0,pre=y+"-"+pad(m+1)+"-";for(var k in S.days){if(k.indexOf(pre)===0)w+=cnt(S.days[k])}return{w:w,v:w*PREMIO}}
+function totalAll(){var w=0;for(var k in S.days)w+=cnt(S.days[k]);return{w:w,v:w*PREMIO}}
+function render(){
+ $("#t1").className=view==="cal"?"act":"";$("#t2").className=view==="wallet"?"act":"";
+ $("#main").innerHTML=view==="cal"?cal():wallet();
+ popKey=null;
+}
+function cal(){
+ var first=new Date(Y,M,1).getDay(),dim=new Date(Y,M+1,0).getDate(),h="";
+ var isNow=(Y===now.getFullYear()&&M===now.getMonth());
+ h+='<div class="nav"><button data-nav="-1" aria-label="Mês anterior">◀</button><h2>'+MES[M]+'<small>'+Y+'</small></h2><button data-nav="1" aria-label="Próximo mês">▶</button></div>';
+ h+='<div class="wk">'+["D","S","T","Q","Q","S","S"].map(function(x){return"<div>"+x+"</div>"}).join("")+"</div><div class=\"grid\">";
+ for(var i=0;i<first;i++)h+='<div class="empty"></div>';
+ for(var d=1;d<=dim;d++){
+  var k=key(Y,M,d),r=S.days[k]||{},c="day",st="";
+  var fut=new Date(Y,M,d)>new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  if(r.a===1)st+="<span>🐾</span>";if(r.b===1)st+="<span>🦴</span>";
+  if(cnt(r)>0)c+=" on";else if(r.a===0||r.b===0){c+=" off";st="<span>😴</span>"}
+  if(isNow&&d===now.getDate())c+=" today";if(fut)c+=" fut";if(popKey===k)c+=" pop";
+  h+='<button class="'+c+'" data-day="'+k+'"><span class="n">'+d+'</span><span class="st">'+st+"</span></button>";
+ }
+ var ms=monthStats(Y,M);
+ h+='</div><div class="chip">🪙 '+rs(ms.v)+' neste mês</div><p class="hint">Toque no dia para carimbar! 🐶</p>';
+ return h;
+}
+function wallet(){
+ var ms=monthStats(Y,M),t=totalAll(),coins="";
+ for(var i=0;i<Math.min(ms.w*1,30);i++)coins+="🪙";
+ var h='<div class="pig"><div class="big">🐷</div><div class="l">'+MES[M]+" "+Y+'</div><div class="v">'+rs(ms.v)+'</div><div class="l">'+ms.w+(ms.w===1?" passeio":" passeios")+' 🐾</div><div class="coins">'+(coins||"Vamos passear?")+'</div></div>';
+ h+='<div class="tot"><div>⭐ Total guardado ⭐</div><div class="v">'+rs(t.v)+'</div><div>'+t.w+(t.w===1?" passeio":" passeios")+' no total</div></div><h3>📖 Meses anteriores</h3>';
+ var set={};set[now.getFullYear()+"-"+pad(now.getMonth()+1)]=1;
+ for(var k in S.days){if(cnt(S.days[k])>0||S.days[k].a===0||S.days[k].b===0)set[k.slice(0,7)]=1}
+ Object.keys(set).sort().reverse().forEach(function(ym){
+  var y=+ym.slice(0,4),m=+ym.slice(5)-1,s=monthStats(y,m);
+  h+='<button class="hist" data-go="'+ym+'"><span style="font-size:30px">'+(s.w?"🏆":"🐕")+'</span><b>'+MES[m]+'<small>'+y+' · '+s.w+(s.w===1?" passeio":" passeios")+'</small></b><span class="m">'+rs(s.v)+'</span></button>';
+ });
+ return h;
+}
+function sheet(k){
+ var r=S.days[k]||{},p=k.split("-"),dn=+p[2],mn=MES[+p[1]-1].toLowerCase();
+ function dog(id,emo){
+  var v=r[id];
+  return '<div class="dog"><h4>'+emo+" "+esc(S.names[id])+'</h4><div class="row"><button class="yes'+(v===1?" sel":"")+'" data-set="'+id+'|1">🐾 Levei!</button><button class="no'+(v===0?" sel":"")+'" data-set="'+id+'|0">😴 Hoje não</button></div></div>';
+ }
+ var o=document.createElement("div");o.className="shade";o.id="shade";
+ o.innerHTML='<div class="sheet"><h2>'+dn+" de "+mn+'</h2><div class="earn">'+(cnt(r)?"🎉 Ganhou "+rs(cnt(r)*PREMIO)+" neste dia!":"Quem passeou hoje?")+"</div>"+dog("a","🐶")+dog("b","🐕")+'<button class="ok" data-close="1">Pronto! ✅</button></div>';
+ o.dataset.k=k;
+ var old=$("#shade");if(old)old.remove();
+ $("#app").appendChild(o);
+}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function settings(){
+ var o=document.createElement("div");o.className="shade";o.id="shade";
+ o.innerHTML='<div class="sheet"><h2>Nomes dos cachorrinhos</h2><input class="nm" id="na" maxlength="14" value="'+esc(S.names.a)+'"><input class="nm" id="nb" maxlength="14" value="'+esc(S.names.b)+'"><button class="ok" data-saven="1">Salvar ✅</button></div>';
+ $("#app").appendChild(o);
+}
+function fx(big){
+ var f=document.createElement("div");f.className="fx";
+ var em=["🎉","🐾","🦴","⭐","🪙","💛","🎈"],h="";
+ for(var i=0;i<(big?45:30);i++){h+='<i style="left:'+Math.random()*100+'%;font-size:'+(18+Math.random()*20)+'px;animation-delay:'+Math.random()*.4+'s;--dx:'+(Math.random()*120-60)+'px;--r:'+(Math.random()*720-360)+'deg">'+em[i%em.length]+"</i>"}
+ f.innerHTML=h;document.body.appendChild(f);setTimeout(function(){f.remove()},2400);
+ var c=document.createElement("div");c.className="cheer";c.innerHTML="🐶<b>+"+rs(PREMIO)+"</b>";document.body.appendChild(c);setTimeout(function(){c.remove()},1400);
+}
+document.addEventListener("click",function(e){
+ var t=e.target.closest("button");if(!t)return;
+ if(t.id==="t1"){view="cal";render()}
+ else if(t.id==="t2"){view="wallet";render()}
+ else if(t.id==="gear")settings();
+ else if(t.dataset.nav){M+=+t.dataset.nav;if(M<0){M=11;Y--}if(M>11){M=0;Y++}render()}
+ else if(t.dataset.day)sheet(t.dataset.day);
+ else if(t.dataset.go){Y=+t.dataset.go.slice(0,4);M=+t.dataset.go.slice(5)-1;view="cal";render()}
+ else if(t.dataset.close){$("#shade").remove();render()}
+ else if(t.dataset.saven){S.names.a=($("#na").value.trim()||"Cachorrinho 1");S.names.b=($("#nb").value.trim()||"Cachorrinho 2");save();$("#shade").remove();render()}
+ else if(t.dataset.set){
+  var k=$("#shade").dataset.k,a=t.dataset.set.split("|"),id=a[0],v=+a[1];
+  var r=S.days[k]||(S.days[k]={});
+  if(r[id]===v){delete r[id]}else{r[id]=v;if(v===1){popKey=k;fx(cnt(r)===2)}}
+  if(r.a===undefined&&r.b===undefined)delete S.days[k];
+  save();sheet(k);render();
+ }
+});
+document.addEventListener("click",function(e){if(e.target.id==="shade"){e.target.remove();render()}});
+render();
+</script>
+</body>
+</html>
